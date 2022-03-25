@@ -11,14 +11,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/mypost")
 public class MypostController {
 
+
+    @ResponseBody
     @PostMapping
-    public String addPost(){
+    public String addMyPost(@RequestBody MyPostData myPostData){
         log.info("map ok");
         return "ok";//나중에 수정
     }
 
-   @DeleteMapping("/{mypostid}")
-    public String deletePost(@PathVariable("mypostid") String data){
+    @ResponseBody
+    @DeleteMapping("/{mypostid}")
+    public String deleteMyPost(@PathVariable("mypostid") String data){
         log.info("delete id={}", data);
         return "delete id=" + data;//나중에 수정
     }
