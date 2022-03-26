@@ -25,7 +25,15 @@ public class MyPostItem {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private MyPost mypost; //주문
-    //시간 등의 정보 추가 되면 추가
+    private MyPost mypost; //내가 작성한 post
+    private String content; //쓴 글의 내용
 
+    //==생성 메서드==//
+    public static MyPostItem createMyPostItem(MyPost myPost, String content) {
+        MyPostItem myPostItem = new MyPostItem();
+        myPostItem.setMypost(myPost);
+        myPostItem.setContent(content);
+        myPost.addQuantity(1);//쓴 글의 수 하나 추가
+        return myPostItem;
+    }
 }

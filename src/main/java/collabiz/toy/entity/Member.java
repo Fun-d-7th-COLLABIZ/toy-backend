@@ -18,6 +18,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
     private String name;
+    private String email;
 
     @OneToMany(mappedBy = "member")
     private List<MyPost> myPosts = new ArrayList<>();
