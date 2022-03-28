@@ -32,7 +32,7 @@ public class MyPostService {
         MyPostItem myPostItem = MyPostItem.createMyPostItem(myPost, myPost);
         //주문 생성
         MyPost myPost = MyPost.createMyPost(member);
-        
+
         //주문 저장
         myPostRepository.save(myPost);
         return myPost.getId();

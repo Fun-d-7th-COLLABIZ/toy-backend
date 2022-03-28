@@ -1,4 +1,4 @@
-package collabiz.toy.controller.MyPost.;
+package collabiz.toy.controller.MyPost;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.*;
 public class MypostController {
 
 
-    @ResponseBody
-    @PostMapping
-    public String addMyPost(@RequestBody MyPostData myPostData){
-        log.info("map ok");
-        return "ok";//나중에 수정
-    }
+//    @ResponseBody
+//    @PostMapping
+//    public String addMyPost(@RequestBody MyPostData myPostData){
+//        log.info("map ok");
+//        return "ok";//나중에 수정
+//    }
 
     @ResponseBody
     @DeleteMapping("/{mypostid}")
