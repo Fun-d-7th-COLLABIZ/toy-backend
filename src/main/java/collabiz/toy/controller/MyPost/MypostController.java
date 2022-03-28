@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.*;
 public class MypostController {
 
 
-//    @ResponseBody
-//    @PostMapping
-//    public String addMyPost(@RequestBody MyPostData myPostData){
-//        log.info("map ok");
-//        return "ok";//나중에 수정
-//    }
+    @ResponseBody
+    @PostMapping
+    public String addMyPost(@RequestBody MyPostData myPostData){
+        log.info("map ok");
+        return "ok";//나중에 수정
+    }
 
     @ResponseBody
     @DeleteMapping("/{mypostid}")
