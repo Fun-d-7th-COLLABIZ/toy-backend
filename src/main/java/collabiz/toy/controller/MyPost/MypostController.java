@@ -1,7 +1,10 @@
 package collabiz.toy.controller.MyPost;
 
+import collabiz.toy.service.MyPostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/mypost")
 public class MypostController {
+    private final MyPostService myPostService;
 
 
     @ResponseBody
@@ -31,4 +35,9 @@ public class MypostController {
         return "delete id=" + data;//나중에 수정
     }
 
+    @ResponseBody
+    @GetMapping("/search")
+    public MyPostSearchResult searchMyPost(Long id, @PageableDefault(page = 1) Pageable pageable, String title) {
+        return myPostService.searchMyPost(id, title, pageable);
+    }
 }

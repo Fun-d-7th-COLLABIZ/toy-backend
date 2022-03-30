@@ -36,6 +36,7 @@ public class MyPost {
 
     private LocalDateTime postDate; //글 쓴 시간
     private int postQuantity; // 쓴 글의 수
+    private String title;
     
     //==연관관계 메서드==//
     public void setMember(Member member) {

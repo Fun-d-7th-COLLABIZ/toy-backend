@@ -4,10 +4,15 @@ import collabiz.toy.entity.Member;
 import collabiz.toy.entity.MyPost;
 import collabiz.toy.entity.QMember;
 import collabiz.toy.entity.QMyPost;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -72,5 +77,36 @@ public class MyPostRepository {
      */
     private BooleanExpression memberIdEq(Long memberId) {
         return memberId != null ? QMember.member.id.eq(memberId) : null;
+    }
+
+    /**
+     * MyPost 제목 검색
+     */
+    public Page<MyPost> findByTitle(Long memberId, Pageable pageable, String title) {
+        List<MyPost> content = queryFactory
+                .select(QMyPost.myPost)
+                .from(QMyPost.myPost)
+                .join(QMember.member)
+                .on(QMember.member.id.eq(memberId))
+                .where(
+                        titleEq(title)
+                )
+                .offset(pageable.getOffset() - pageable.getPageSize())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        // 총 페이지 수 조회
+        JPAQuery<Long> countQuery = queryFactory
+                .select(QMyPost.myPost.count())
+                .from(QMyPost.myPost)
+                .join(QMember.member)
+                .on(QMember.member.id.eq(memberId))
+                .where(titleEq(title));
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
+    }
+
+    private BooleanExpression titleEq(String title) {
+        return StringUtils.hasText(title) ? QMyPost.myPost.title.eq(title) : null;
     }
 }

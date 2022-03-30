@@ -1,12 +1,15 @@
 package collabiz.toy.service;
 
 
+import collabiz.toy.controller.MyPost.MyPostSearchResult;
 import collabiz.toy.entity.Member;
 import collabiz.toy.entity.MyPost;
 import collabiz.toy.entity.MyPostItem;
 import collabiz.toy.repository.MemberRepository;
 import collabiz.toy.repository.MyPostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,10 +46,14 @@ public class MyPostService {
         //주문 엔티티 조회
         MyPost myPost = myPostRepository.findOne(myPostId);
     }
-    /** 주문 검색 */
-    /*
-     public List<Order> findOrders(OrderSearch orderSearch) {
-     return orderRepository.findAll(orderSearch);
-     }
-    */
+
+    /**
+     * 제목 검색
+     */
+    public MyPostSearchResult searchMyPost(Long memberId, String title, Pageable pageable) {
+        Page<MyPost> result = myPostRepository.findByTitle(memberId, pageable, title);
+
+        return new MyPostSearchResult(result.getContent(), result.getTotalPages());
+    }
+
 }
